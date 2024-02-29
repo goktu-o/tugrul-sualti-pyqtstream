@@ -9,4 +9,6 @@ video_server.py dosyasi pi`dan gelen goruntuleri aliyor.
 
 video_server.py dosyasindaki "self.ip" degiskeninin adresi: Win+R > cmd > ipconfig > Ethernet adapter Ethernet: > Autoconfiguration IPv4 Address. . : > 169.254.112.175 (bu adres degisebilir(?)) AF_INET kullandigimiz icin IPv4 adresini aliyoruz.
 
-Raspberry pi uzerinde origin.py, masaustunde launcher.py dosyasi calistiriyoruz. (once pi uzerinde origin.py calistirilmasi onemli gelmeyen goruntuyu masaustu uygulama aktaramaz)
+Raspberry pi uzerinde origin.py, masaustunde launcher.py dosyasi calistiriyoruz. 
+(once pi uzerinde origin.py calistirilmasi onemli gelmeyen goruntuyu masaustu uygulama aktaramaz)
+Hatta baslangicta masaustu uygulama calistirilirsa uygulama yanit vermiyor.
