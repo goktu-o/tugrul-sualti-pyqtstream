@@ -59,19 +59,31 @@ class VideoServer(QtWidgets.QMainWindow):
         pixmap = self.ui.label.pixmap()
         if pixmap is not None:
             # Get the current date and time
-            current_time = datetime.now().strftime("%m%d%Y_%H%M%S")
-            filename = f"{current_time}_recorded_image.png"
+            current_time = datetime.now().strftime("%m_%d_%Y_%H%M%S")
 
-            # Check if the file already exists
+            # Get the path to the desktop
+            desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+
+            # Create the screenshots folder if it doesn't exist
+            screenshots_folder = os.path.join(desktop_path, "screenshots")
+            os.makedirs(screenshots_folder, exist_ok=True)
+
+            # Check if the file already exists and append counter if necessary
             counter = 1
-            while os.path.exists(filename):
-                # If the file exists, append a counter to make the filename unique
-                filename = f"{current_time}_recorded_image_{counter}.png"
+            filename = f"{current_time}_recorded_image_{counter}.png"
+            while os.path.exists(os.path.join(screenshots_folder, filename)):
                 counter += 1
+                filename = f"{current_time}_recorded_image_{counter}.png"
 
-            pixmap.toImage().save(filename)
+            # Save the screenshot to the desktop screenshots folder
+            screenshot_path = os.path.join(screenshots_folder, filename)
+            pixmap.toImage().save(screenshot_path)
+
+            # Update the UI with the recorded image filename
             self.ui.recordInfoLabel.setText(f"Image recorded as: {filename}")
-            self.timer.start(2000)  # Clear the message after 2 seconds
+
+            # Start the timer to clear the message after 2 seconds
+            self.timer.start(2000)
     
     def clear_record_info(self):
         self.ui.recordInfoLabel.clear()
