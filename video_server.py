@@ -25,11 +25,19 @@ class VideoServer(QtWidgets.QMainWindow):
         # Connect the clicked signal of the recordButton to the record_image method
         self.ui.recordButton.clicked.connect(self.record_image)
 
+        # Connect buttons for recording video
+        self.ui.startRecordingButton.clicked.connect(self.start_recording)
+        self.ui.stopRecordingButton.clicked.connect(self.stop_recording)
+
         # Create a timer to clear the recording information after a certain time
         self.timer = QTimer(self)
         self.timer.setSingleShot(True)
         self.timer.timeout.connect(self.clear_record_info)
-        
+
+        # Video recording variables
+        self.recording = False
+        self.out = None
+
         # Start receiving frames
         self.receive_frames()
 
@@ -53,6 +61,10 @@ class VideoServer(QtWidgets.QMainWindow):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         image = QImage(frame, frame.shape[1], frame.shape[0], frame.strides[0], QImage.Format_RGB888)
         self.ui.label.setPixmap(QtGui.QPixmap.fromImage(image))
+
+        # Write frame to video if recording is in progress
+        if self.recording and self.out is not None:
+            self.out.write(frame)
 
     def record_image(self):
         # Capture the current frame from the label and save it
@@ -84,6 +96,29 @@ class VideoServer(QtWidgets.QMainWindow):
 
             # Start the timer to clear the message after 2 seconds
             self.timer.start(2000)
-    
+
     def clear_record_info(self):
         self.ui.recordInfoLabel.clear()
+
+    def start_recording(self):
+        # Check if recording is already in progress
+        if not self.recording:
+            # Start recording video
+            self.recording = True
+
+            # Define the codec and create VideoWriter object
+            current_time = datetime.now().strftime("%m_%d_%Y_%H%M%S")
+            desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
+            video_path = os.path.join(desktop_path, f"recorded_video_{current_time}.avi")
+            frame_width = 640
+            frame_height = 480
+            self.out = cv2.VideoWriter(video_path, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (frame_width, frame_height))
+
+    def stop_recording(self):
+        if self.recording:
+            # Stop recording video
+            self.recording = False
+            if self.out is not None:
+                self.out.release()
+                self.ui.recordInfoLabel.setText(f"Video recorded as: {self.out}")
+                self.timer.start(2000)
