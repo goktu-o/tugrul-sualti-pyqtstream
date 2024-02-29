@@ -15,6 +15,7 @@ Raspberry pi uzerinde origin.py, masaustunde launcher.py dosyasi calistiriyoruz.
 (once pi uzerinde origin.py calistirilmasi onemli gelmeyen goruntuyu masaustu uygulama aktaramaz)
 Hatta baslangicta masaustu uygulama calistirilirsa uygulama yanit vermiyor.
 
+-------
 -------RASPBERRY PI-------
 raspberry-pi klasorundeki origin.py dosyasi raspberry uzerinde calistirilacak. masaustunde olmasina gerek yok.
 
