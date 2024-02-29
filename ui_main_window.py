@@ -17,6 +17,13 @@ class Ui_MainWindow(object):
         self.recordInfoLabel.setGeometry(QtCore.QRect(150, 30, 350, 40))
         self.recordInfoLabel.setObjectName("recordInfoLabel")
 
+        # Add QLabel for 'image' label
+        self.imageLabel = QtWidgets.QLabel(self.centralwidget)
+        self.imageLabel.setGeometry(QtCore.QRect(670, 0, 120, 20))
+        self.imageLabel.setObjectName("imageLabel")
+        self.imageLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.imageLabel.setText("Image")
+
         # Add buttons for video recording
         self.startRecordingButton = QtWidgets.QPushButton(self.centralwidget)
         self.startRecordingButton.setGeometry(QtCore.QRect(670, 80, 120, 40))
@@ -27,6 +34,13 @@ class Ui_MainWindow(object):
         self.stopRecordingButton.setGeometry(QtCore.QRect(670, 130, 120, 40))
         self.stopRecordingButton.setObjectName("stopRecordingButton")
         self.stopRecordingButton.setText("Stop Recording")
+
+        # Add QLabel for 'video' label
+        self.videoLabel = QtWidgets.QLabel(self.centralwidget)
+        self.videoLabel.setGeometry(QtCore.QRect(670, 170, 120, 20))
+        self.videoLabel.setObjectName("videoLabel")
+        self.videoLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.videoLabel.setText("Video")
 
         # Add a QLabel for your logo
         self.logoLabel = QtWidgets.QLabel(self.centralwidget)

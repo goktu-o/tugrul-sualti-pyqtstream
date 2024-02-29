@@ -40,7 +40,7 @@ class VideoServer(QtWidgets.QMainWindow):
 
         # Start receiving frames
         self.receive_frames()
-
+    
     def receive_frames(self):
         while True:
             x = self.s.recvfrom(1000000)
@@ -110,6 +110,7 @@ class VideoServer(QtWidgets.QMainWindow):
     def clear_record_info(self):
         self.ui.recordInfoLabel.clear()
 
+    
     def start_recording(self):
         # Check if recording is already in progress
         if not self.recording:
@@ -119,7 +120,13 @@ class VideoServer(QtWidgets.QMainWindow):
             # Define the codec and create VideoWriter object
             current_time = datetime.now().strftime("%m_%d_%Y_%H%M%S")
             desktop_path = os.path.join(os.path.expanduser("~"), "Desktop")
-            video_path = os.path.join(desktop_path, f"recorded_video_{current_time}.avi")
+            video_folder = os.path.join(desktop_path, "video_records")
+
+            # Check if the video_records folder already exists
+            if not os.path.exists(video_folder):
+                os.makedirs(video_folder)
+            
+            video_path = os.path.join(video_folder, f"recorded_video_{current_time}.avi")
             frame_width = 640
             frame_height = 480
             self.out = cv2.VideoWriter(video_path, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (frame_width, frame_height))
