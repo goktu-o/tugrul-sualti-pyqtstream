@@ -23,7 +23,7 @@ class VideoServer(QtWidgets.QMainWindow):
         self.show()
 
         # Connect the clicked signal of the recordButton to the record_image method
-        self.ui.recordButton.clicked.connect(self.record_image)
+        self.ui.screenshotButton.clicked.connect(self.record_image)
 
         # Connect buttons for recording video
         self.ui.startRecordingButton.clicked.connect(self.start_recording)
