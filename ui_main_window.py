@@ -23,7 +23,7 @@ class Ui_MainWindow(object):
         self.logoLabel.setObjectName("logoLabel")
 
         # Set the pixmap of the logoLabel to your logo image
-        logo_path = "C:/Users/Goktug/sualti/OpenCVStreaming-main/assets/tugrul-logo_99x91px.png"
+        logo_path = "assets/tugrul-logo_99x91px.png"
         self.logoLabel.setPixmap(QtGui.QPixmap(logo_path))
 
         MainWindow.setCentralWidget(self.centralwidget)
