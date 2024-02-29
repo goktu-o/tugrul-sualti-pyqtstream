@@ -1,11 +1,11 @@
 import cv2
 import os
 import socket
-import numpy
+import numpy as np
 import pickle
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QImage
-from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QImage, QPainter, QColor
+from PyQt5.QtCore import QTimer, Qt
 from datetime import datetime
 from ui_main_window import Ui_MainWindow
 
@@ -59,8 +59,18 @@ class VideoServer(QtWidgets.QMainWindow):
     def update_frame(self, frame):
         # Convert the frame to QImage and display it in the UI
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
         image = QImage(frame, frame.shape[1], frame.shape[0], frame.strides[0], QImage.Format_RGB888)
-        self.ui.label.setPixmap(QtGui.QPixmap.fromImage(image))
+        pixmap = QtGui.QPixmap.fromImage(image)
+
+        # Draw red dot to indicate recording if recording is in progress
+        if self.recording:
+            painter = QtGui.QPainter(pixmap)
+            painter.setPen(QtGui.QPen(QtGui.QColor(255, 0, 0), 5))
+            painter.drawPoint(pixmap.width() - 20, 20)
+            painter.end()
+
+        self.ui.label.setPixmap(pixmap)
 
         # Write frame to video if recording is in progress
         if self.recording and self.out is not None:
@@ -113,6 +123,9 @@ class VideoServer(QtWidgets.QMainWindow):
             frame_width = 640
             frame_height = 480
             self.out = cv2.VideoWriter(video_path, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (frame_width, frame_height))
+        else:
+            # Warn the user about recording in progress
+            QtWidgets.QMessageBox.warning(self, "Recording in Progress", "Recording is already in progress. Stop recording before starting a new one.")
 
     def stop_recording(self):
         if self.recording:
