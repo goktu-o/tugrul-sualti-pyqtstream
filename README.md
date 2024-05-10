@@ -30,4 +30,5 @@ https://www.youtube.com/watch?v=QzVYnG-WaM4
 Dipnot: Baslangic kodu olarak > 
 https://github.com/abhikesare9/live-streaming-with-opencv 
 kullandim.
+assets klasöründeki logo/iconlar bana ait değil.
       
